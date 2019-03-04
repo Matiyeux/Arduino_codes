@@ -1,0 +1,32 @@
+//Code fonctionnel, vérifié avec passerelle MOXA MB3170 en 8 bits, sans parité et avec un bit de stop.
+// Le pin d'enable est positionné en digital 2
+// Esclave 2, Attention à la longueur des registres vérifiés avec Mobus Doctor
+
+#include <SimpleModbusSlave.h>
+
+
+#define TxEnablePin 2                                                           // INDUSTRUINO RS485
+#define   baud 9600   // tested 9600 to 115200
+#define   SlaveID 2
+#define   HOLDING_REGS_SIZE 8
+
+unsigned int holdingRegs[HOLDING_REGS_SIZE]; // function 3 and 16 register array
+////////////////////////////////////////////////////////////
+
+void setup()
+{
+  modbus_configure(&Serial, baud, SERIAL_8N2, SlaveID, TxEnablePin, HOLDING_REGS_SIZE, holdingRegs);
+  modbus_update_comms(baud, SERIAL_8N2, SlaveID);
+}
+
+void loop()
+{
+  modbus_update();
+  holdingRegs[1] = analogRead(A1);
+  holdingRegs[2] = analogRead(A2);
+  holdingRegs[3] = analogRead(A3);
+  holdingRegs[4] = analogRead(A4);
+  holdingRegs[6] = 155;    // set register according to button on Slave
+  holdingRegs[7] = 166;    // set register according to button on Slave
+  delay(100);
+}
