@@ -1,6 +1,8 @@
-//Code fonctionnel, vérifié avec passerelle MOXA MB3170 en 8 bits, sans parité et avec un bit de stop.
+//Code fonctionnel, vérifié avec passerelle MOXA MB3170 en 8 bits, sans parité et avec deux bits de stop.
 // Le pin d'enable est positionné en digital 2
 // Esclave 2, Attention à la longueur des registres vérifiés avec Mobus Doctor
+// La librairie se trouve dans le dossier parent.
+// Attention seule la librairie Esclave a été testée
 
 #include <SimpleModbusSlave.h>
 
